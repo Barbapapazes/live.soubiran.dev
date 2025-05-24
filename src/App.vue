@@ -3,6 +3,13 @@ const confetti = useConfetti()
 function explode() {
   confetti.explode()
 }
+
+onMounted(() => {
+  window.Echo.channel('live')
+    .listen('ConfettiExplode', () => {
+      confetti.explode()
+    })
+})
 </script>
 
 <template>
