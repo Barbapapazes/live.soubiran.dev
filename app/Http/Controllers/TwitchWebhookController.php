@@ -10,6 +10,7 @@ use App\Jobs\SubscribeSubscription;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class TwitchWebhookController extends Controller
@@ -19,6 +20,11 @@ class TwitchWebhookController extends Controller
         $messageType = $request->header('Twitch-Eventsub-Message-Type');
 
         if ($messageType === 'webhook_callback_verification' && $request->has('challenge')) {
+            Log::info('Received Twitch webhook callback verification', [
+                'challenge' => $request->input('challenge'),
+                'subscription_id' => $request->input('subscription.id'),
+            ]);
+
             User::where('twitch_id', $request->input('subscription.condition.broadcaster_user_id'))->sole()
                 ->subscriptions()
                 ->create([
@@ -31,9 +37,13 @@ class TwitchWebhookController extends Controller
 
         if ($messageType === 'notification' && $request->has('event')) {
             if (Str::startsWith($request->input('event.message.text'), '!confetti')) {
+                Log::info('Confetti command received');
+
                 $lock = Cache::lock('confetti', 10);
                 if ($lock->get()) {
                     event(new ConfettiExplode());
+                } else {
+                    Log::warning('Confetti command ignored due to existing lock');
                 }
             }
 
@@ -41,6 +51,11 @@ class TwitchWebhookController extends Controller
         }
 
         if ($messageType === 'revocation') {
+            Log::info('Received Twitch webhook subscription revocation', [
+                'subscription_id' => $request->input('subscription.id'),
+                'event' => $request->input('subscription.type'),
+            ]);
+
             $user = User::where('twitch_id', $request->input('subscription.condition.broadcaster_user_id'))->sole();
 
             $user->subscriptions()

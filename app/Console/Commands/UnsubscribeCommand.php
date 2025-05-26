@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\Subscription;
 use App\Services\Twitch;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UnsubscribeCommand extends Command
 {
@@ -32,6 +33,11 @@ class UnsubscribeCommand extends Command
         $subscriptions = $twitch->getSubscriptions();
 
         foreach ($subscriptions as $subscription) {
+            Log::info('Unsubscribing from Twitch event', [
+                'subscription_id' => $subscription['id'],
+                'event' => $subscription['type'],
+            ]);
+
             $twitch->unsubscribe($subscription['id']);
 
             Subscription::where('subscription_id', $subscription['id'])->delete();

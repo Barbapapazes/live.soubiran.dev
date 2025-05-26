@@ -24,6 +24,7 @@ it('unsubscribes from all Twitch events', function () {
         $this->twitchSubscriptionsUrl => Http::response([
             'data' => [[
                 'id' => $subscriptionId,
+                'type' => 'channel.chat.message',
             ]],
         ]),
     ]);
@@ -49,6 +50,7 @@ it('deletes associated subscriptions', function () {
         $this->twitchSubscriptionsUrl => Http::response([
             'data' => [[
                 'id' => $subscription->subscription_id,
+                'type' => 'channel.chat.message',
             ]],
         ]),
     ]);
