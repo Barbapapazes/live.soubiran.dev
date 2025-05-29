@@ -5,7 +5,7 @@ defineSlots<{
 </script>
 
 <template>
-  <main class="bg-white text-slate-950 font-sans px-60 py-100">
+  <main class="w-full h-full bg-white text-slate-950 font-sans px-60 py-100">
     <div class="flex flex-col gap-20">
       <slot />
     </div>
