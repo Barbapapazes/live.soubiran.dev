@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Events\ConfettiExplode;
+use App\Events\ConfettiLocked;
 use App\Http\Requests\TwitchWebhookRequest;
 use App\Jobs\SubscribeSubscription;
 use App\Models\User;
@@ -44,6 +45,8 @@ class TwitchWebhookController extends Controller
                     event(new ConfettiExplode());
                 } else {
                     Log::warning('Confetti command ignored due to existing lock');
+
+                    event(new ConfettiLocked());
                 }
             }
 

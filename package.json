@@ -12,12 +12,15 @@
     "@inertiajs/vue3": "^2.0.11",
     "@neoconfetti/vanilla": "^0.2.1",
     "@types/node": "^22.15.21",
+    "@vueuse/core": "^13.3.0",
     "laravel-echo": "^2.1.4",
     "pusher-js": "^8.4.0",
     "vue": "^3.5.14"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.2",
+    "@egoist/tailwindcss-icons": "^1.9.0",
+    "@iconify-json/logos": "^1.2.4",
     "@tailwindcss/vite": "^4.0.0",
     "@tsconfig/node22": "^22.0.2",
     "@vitejs/plugin-vue": "^5.2.4",

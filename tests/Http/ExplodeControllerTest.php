@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Events\ConfettiExplode;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;

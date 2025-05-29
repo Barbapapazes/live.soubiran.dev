@@ -1,9 +1,21 @@
 @import 'tailwindcss';
 @source '../**/*.ts';
 @source '../**/*.vue';
+@plugin '@egoist/tailwindcss-icons';
 
 @theme {
     --font-sans: 'DM Sans', sans-serif;
     --font-sofia: 'Sofia sans', sans-serif;
     --font-mono: 'DM Mono', monospace;
+}
+
+.slide-in-enter-active,
+.slide-in-leave-active {
+    transition: all 0.5s ease;
+}
+
+.slide-in-enter-from,
+.slide-in-leave-to {
+    opacity: 0;
+    transform: translateY(100%);
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\BreakOverlayController;
 use App\Http\Controllers\EndOverlayController;
 use App\Http\Controllers\MainOverlayController;
 use App\Http\Controllers\StartOverlayController;
@@ -16,6 +17,8 @@ Route::prefix('overlays')->name('overlays.')->group(function () {
         ->name('end');
     Route::get('main', MainOverlayController::class)
         ->name('main');
+    Route::get('break', BreakOverlayController::class)
+        ->name('break');
 });
 
 Route::get('/auth/twitch/redirect', TwitchRedirectController::class)->name('auth.twitch.redirect');

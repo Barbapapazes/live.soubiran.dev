@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Events\ConfettiExplode;
+use App\Events\ConfettiLocked;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 
@@ -47,4 +48,16 @@ it('locks the confetti event for 10 seconds once it is triggered', function () {
     $this->postJson(route('webhook.twitch'), $this->payload);
 
     Event::assertDispatched(ConfettiExplode::class, 2);
+});
+
+it('sends a locked confetti event when the confetti command is ignored due to an existing lock', function () {
+    Event::fake();
+
+    $this->postJson(route('webhook.twitch'), $this->payload);
+    Event::assertDispatched(ConfettiExplode::class, 1);
+
+    // Simulate a second request while the lock is still active
+    $this->postJson(route('webhook.twitch'), $this->payload);
+
+    Event::assertDispatched(ConfettiLocked::class);
 });
