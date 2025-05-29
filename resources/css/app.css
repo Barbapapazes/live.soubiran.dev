@@ -1,3 +1,9 @@
 @import 'tailwindcss';
 @source '../**/*.ts';
 @source '../**/*.vue';
+
+@theme {
+    --font-sans: 'DM Sans', sans-serif;
+    --font-sofia: 'Sofia sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+}

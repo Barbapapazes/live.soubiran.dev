@@ -2,6 +2,7 @@ import Tailwind from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import Laravel from 'laravel-vite-plugin'
 import AutoImport from 'unplugin-auto-import/vite'
+import Fonts from 'unplugin-fonts/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 
@@ -14,6 +15,25 @@ export default defineConfig({
 
     Vue(),
     Tailwind(),
+
+    Fonts({
+      google: {
+        families: [
+          {
+            name: 'DM Sans',
+            styles: 'ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000',
+          },
+          {
+            name: 'DM Mono',
+            styles: 'ital,wght@0,300;0,400;0,500;1,300;1,400;1,500',
+          },
+          {
+            name: 'Sofia Sans',
+            styles: 'ital,wght@0,1..1000;1,1..1000',
+          },
+        ],
+      },
+    }),
 
     AutoImport({
       dts: 'resources/js/auto-imports.d.ts',

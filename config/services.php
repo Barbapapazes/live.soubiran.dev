@@ -23,4 +23,8 @@ return [
         'secret' => env('TWITCH_SECRET'),
         'callback_url' => env('TWITCH_CALLBACK_URL'),
     ],
+
+    'confetti' => [
+        'key' => env('CONFETTI_API_KEY'),
+    ],
 ];
