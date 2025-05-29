@@ -8,5 +8,6 @@ use Illuminate\Broadcasting\Channel;
 it('can broadcast confetti explode event', function () {
     $event = new ConfettiExplode();
 
-    expect($event->broadcastOn()->__toString())->toBe(new Channel('live')->__toString());
+    expect($event->broadcastOn()->__toString())
+        ->toBe(new Channel('live')->__toString());
 });
