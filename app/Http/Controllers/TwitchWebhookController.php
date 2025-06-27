@@ -9,6 +9,7 @@ use App\Events\ConfettiLocked;
 use App\Http\Requests\TwitchWebhookRequest;
 use App\Jobs\SubscribeSubscription;
 use App\Models\User;
+use App\Services\TwitchEvents;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,7 @@ use Illuminate\Support\Str;
 
 class TwitchWebhookController extends Controller
 {
-    public function __invoke(TwitchWebhookRequest $request): Response
+    public function __invoke(TwitchWebhookRequest $request, TwitchEvents $twitchEvents): Response
     {
         $messageType = $request->header('Twitch-Eventsub-Message-Type');
 
@@ -39,15 +40,10 @@ class TwitchWebhookController extends Controller
         if ($messageType === 'notification' && $request->has('event')) {
             if (Str::startsWith($request->input('event.message.text'), '!confetti')) {
                 Log::info('Confetti command received');
-
-                $lock = Cache::lock('confetti', 10);
-                if ($lock->get()) {
-                    event(new ConfettiExplode());
-                } else {
-                    Log::warning('Confetti command ignored due to existing lock');
-
-                    event(new ConfettiLocked());
-                }
+                $twitchEvents->confetti();
+            } else if (Str::startsWith($request->input('event.message.text'), '!react')) {
+                Log::info('React command received');
+                $twitchEvents->react(Str::after($request->input('event.message.text'), '!react '));
             }
 
             return response()->noContent(200);
