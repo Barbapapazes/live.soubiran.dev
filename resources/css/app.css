@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @source '../**/*.ts';
 @source '../**/*.vue';
 @plugin '@egoist/tailwindcss-icons';
@@ -9,13 +9,15 @@
     --font-mono: 'DM Mono', monospace;
 }
 
-.slide-in-enter-active,
-.slide-in-leave-active {
+.slide-in-enter-active {
     transition: all 0.5s ease;
+}
+.slide-in-leave-active {
+    transition: all 0.3s ease;
 }
 
 .slide-in-enter-from,
 .slide-in-leave-to {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(12rem);
 }

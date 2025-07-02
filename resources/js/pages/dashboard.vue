@@ -1,0 +1,66 @@
+<script lang="ts" setup>
+import HideLiveQuestionController from '@/actions/App/Http/Controllers/HideLiveQuestionController'
+import ShowLiveQuestionController from '@/actions/App/Http/Controllers/ShowLiveQuestionController'
+
+interface ReceivedMessage {
+  message: string
+  username: string
+  color: string
+}
+
+const messages = ref<ReceivedMessage[]>([])
+
+onMounted(() => {
+  window.Echo.private('chat')
+    .listen('ReceivedMessage', (event: ReceivedMessage) => {
+      messages.value.push(event)
+    })
+})
+const reverseMessages = computed(() => {
+  return messages.value.slice().reverse()
+})
+
+const showLiveQuestionForm = useForm({
+  question: '',
+  username: '',
+  color: '',
+})
+function showLiveQuestion(message: ReceivedMessage) {
+  showLiveQuestionForm.question = message.message
+  showLiveQuestionForm.username = message.username
+  showLiveQuestionForm.color = message.color
+
+  showLiveQuestionForm.submit(ShowLiveQuestionController())
+}
+
+const hideLiveQuestionForm = useForm({})
+function hideLiveQuestion() {
+  hideLiveQuestionForm.submit(HideLiveQuestionController())
+}
+</script>
+
+<template>
+  <main>
+    <ul>
+      <li v-for="(msg, index) in reverseMessages" :key="index">
+        <button @click="showLiveQuestion(msg)">
+          {{ msg.message }}
+        </button>
+
+        <span :style="{ color: msg.color }">
+          <strong>{{ msg.username }}</strong>
+        </span>
+      </li>
+    </ul>
+
+    <button @click="hideLiveQuestion">
+      Hide Live Question
+    </button>
+
+    <LiveQuestion
+      question="This is my first question and I want to know if it works or not?"
+      username="Barbapapazes"
+      color="#6859af"
+    />
+  </main>
+</template>

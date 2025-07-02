@@ -19,8 +19,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.nova
-/.vscode
 /.zed
 
 auto-imports.d.ts
 components.d.ts
+resources/js/actions
+resources/js/wayfinder

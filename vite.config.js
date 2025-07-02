@@ -1,3 +1,4 @@
+import { wayfinder as Wayfinder } from '@laravel/vite-plugin-wayfinder'
 import Tailwind from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import Laravel from 'laravel-vite-plugin'
@@ -15,6 +16,9 @@ export default defineConfig({
 
     Vue(),
     Tailwind(),
+    Wayfinder({
+      routes: false,
+    }),
 
     Fonts({
       google: {
@@ -44,6 +48,10 @@ export default defineConfig({
       imports: [
         'vue',
         '@vueuse/core',
+        {
+          from: '@inertiajs/vue3',
+          imports: ['useForm'],
+        },
       ],
     }),
     Components({
@@ -54,4 +62,10 @@ export default defineConfig({
       ],
     }),
   ],
+
+  resolve: {
+    alias: {
+      '@': '/resources/js',
+    },
+  },
 })

@@ -48,7 +48,7 @@ it('allows access if the user has access', function () {
     ]);
 
     $this->get(route('auth.twitch.callback'))
-        ->assertOk();
+        ->assertRedirect(route('dashboard'));
 });
 
 it('dispatches a job to subscribe to the channel', function () {

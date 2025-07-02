@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ConfettiExplode;
 use App\Events\ConfettiLocked;
+use App\Events\ReceivedMessage;
 use App\Http\Requests\TwitchWebhookRequest;
 use App\Jobs\SubscribeSubscription;
 use App\Models\User;
@@ -37,6 +38,12 @@ class TwitchWebhookController extends Controller
         }
 
         if ($messageType === 'notification' && $request->has('event')) {
+            event(new ReceivedMessage(
+                $request->input('event.message.text'),
+                $request->input('event.chatter_user_name'),
+                $request->input('event.color')
+            ));
+
             if (Str::startsWith($request->input('event.message.text'), '!confetti')) {
                 Log::info('Confetti command received');
 
