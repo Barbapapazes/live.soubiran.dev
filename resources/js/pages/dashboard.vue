@@ -53,11 +53,5 @@ function hideLiveQuestion() {
     <button @click="hideLiveQuestion">
       Hide Live Question
     </button>
-
-    <LiveQuestion
-      question="This is my first question and I want to know if it works or not?"
-      username="Barbapapazes"
-      color="#6859af"
-    />
   </main>
 </template>
