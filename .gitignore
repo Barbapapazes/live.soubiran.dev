@@ -23,5 +23,3 @@ yarn-error.log
 
 auto-imports.d.ts
 components.d.ts
-resources/js/actions
-resources/js/wayfinder

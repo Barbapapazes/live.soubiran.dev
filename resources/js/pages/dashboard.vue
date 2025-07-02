@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import HideLiveQuestionController from '@/actions/App/Http/Controllers/HideLiveQuestionController'
-import ShowLiveQuestionController from '@/actions/App/Http/Controllers/ShowLiveQuestionController'
-
 interface ReceivedMessage {
   message: string
   username: string
@@ -30,12 +27,12 @@ function showLiveQuestion(message: ReceivedMessage) {
   showLiveQuestionForm.username = message.username
   showLiveQuestionForm.color = message.color
 
-  showLiveQuestionForm.submit(ShowLiveQuestionController())
+  showLiveQuestionForm.post('/live-question')
 }
 
 const hideLiveQuestionForm = useForm({})
 function hideLiveQuestion() {
-  hideLiveQuestionForm.submit(HideLiveQuestionController())
+  hideLiveQuestionForm.delete('/live-question')
 }
 </script>
 

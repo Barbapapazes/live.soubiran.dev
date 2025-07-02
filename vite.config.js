@@ -1,4 +1,3 @@
-import { wayfinder as Wayfinder } from '@laravel/vite-plugin-wayfinder'
 import Tailwind from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import Laravel from 'laravel-vite-plugin'
@@ -16,10 +15,6 @@ export default defineConfig({
 
     Vue(),
     Tailwind(),
-    Wayfinder({
-      routes: false,
-    }),
-
     Fonts({
       google: {
         families: [

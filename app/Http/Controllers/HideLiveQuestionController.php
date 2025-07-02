@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Events\HideLiveQuestion;
-use Illuminate\Http\Request;
 
 class HideLiveQuestionController extends Controller
 {
