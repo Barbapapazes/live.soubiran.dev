@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SubscribeSubscription;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class TwitchCallbackController extends Controller
@@ -15,7 +17,7 @@ class TwitchCallbackController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(): Response
+    public function __invoke(): RedirectResponse|Response
     {
         $twitchUser = Socialite::driver('twitch')->user();
 
@@ -33,6 +35,8 @@ class TwitchCallbackController extends Controller
 
         SubscribeSubscription::dispatch($user->id, $user->twitch_id, 'channel.chat.message');
 
-        return response('ok', status: 200);
+        Auth::login($user);
+
+        return to_route('dashboard');
     }
 }
