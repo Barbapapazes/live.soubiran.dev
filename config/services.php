@@ -27,4 +27,13 @@ return [
     'confetti' => [
         'key' => env('CONFETTI_API_KEY'),
     ],
+
+    'youtube' => [
+        'key' => env('YOUTUBE_API_KEY'),
+    ],
+
+    'soubiran' => [
+        'webhook_url' => env('SOUBIRAN_WEBHOOK_URL'),
+        'webhook_secret' => env('SOUBIRAN_WEBHOOK_SECRET'),
+    ]
 ];
