@@ -46,10 +46,23 @@ it('broadcasts every messages', function () {
     });
 });
 
-it('triggers a confetti event when the confetti command is detected', function () {
+it('triggers a confetti event when the `!confetti` command is detected', function () {
     Event::fake();
 
-    $this->postJson(route('webhook.twitch'), $this->payload);
+    $this
+        ->postJson(route('webhook.twitch'), $this->payload);
+
+    Event::assertDispatched(ConfettiExplode::class);
+});
+
+it('triggers a confetti event when the `!confettis` command is detected', function () {
+    Event::fake();
+
+    $this->payload['event']['message']['text'] = '!confettis'; // For french viewers
+
+    $this
+        ->withHeaders(headers($this->payload))
+        ->postJson(route('webhook.twitch'), $this->payload);
 
     Event::assertDispatched(ConfettiExplode::class);
 });

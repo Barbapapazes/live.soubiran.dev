@@ -44,7 +44,10 @@ class TwitchWebhookController extends Controller
                 $request->input('event.color')
             ));
 
-            if (Str::startsWith($request->input('event.message.text'), '!confetti')) {
+            if (
+                Str::startsWith($request->input('event.message.text'), '!confetti') ||
+                Str::startsWith($request->input('event.message.text'), '!confettis')
+            ) {
                 Log::info('Confetti command received');
 
                 $lock = Cache::lock('confetti', 10);
