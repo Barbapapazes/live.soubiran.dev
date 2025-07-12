@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Events\ConfettiExplode;
-use App\Events\ConfettiLocked;
+use App\Actions\Celebrate;
 use App\Events\ReceivedMessage;
 use App\Http\Requests\TwitchWebhookRequest;
 use App\Jobs\SubscribeSubscription;
 use App\Models\User;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class TwitchWebhookController extends Controller
+class TwitchWebhookController
 {
-    public function __invoke(TwitchWebhookRequest $request): Response
+    public function __invoke(TwitchWebhookRequest $request, Celebrate $celebrate): Response
     {
         $messageType = $request->header('Twitch-Eventsub-Message-Type');
 
@@ -46,18 +44,12 @@ class TwitchWebhookController extends Controller
 
             if (
                 Str::startsWith($request->input('event.message.text'), '!confetti') ||
-                Str::startsWith($request->input('event.message.text'), '!confettis')
+                Str::startsWith($request->input('event.message.text'), '!confettis') ||
+                Str::startsWith($request->input('event.message.text'), '!celebrate')
             ) {
-                Log::info('Confetti command received');
+                Log::info('Celebrate command received');
 
-                $lock = Cache::lock('confetti', 10);
-                if ($lock->get()) {
-                    event(new ConfettiExplode());
-                } else {
-                    Log::warning('Confetti command ignored due to existing lock');
-
-                    event(new ConfettiLocked());
-                }
+                $celebrate->handle();
             }
 
             return response()->noContent(200);

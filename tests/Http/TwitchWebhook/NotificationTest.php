@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Events\ConfettiExplode;
-use App\Events\ConfettiLocked;
+use App\Events\CelebrationOver;
 use App\Events\ReceivedMessage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
@@ -52,7 +51,7 @@ it('triggers a confetti event when the `!confetti` command is detected', functio
     $this
         ->postJson(route('webhook.twitch'), $this->payload);
 
-    Event::assertDispatched(ConfettiExplode::class);
+    Event::assertDispatched(CelebrationOver::class);
 });
 
 it('triggers a confetti event when the `!confettis` command is detected', function () {
@@ -64,34 +63,19 @@ it('triggers a confetti event when the `!confettis` command is detected', functi
         ->withHeaders(headers($this->payload))
         ->postJson(route('webhook.twitch'), $this->payload);
 
-    Event::assertDispatched(ConfettiExplode::class);
+    Event::assertDispatched(CelebrationOver::class);
 });
 
-it('locks the confetti event for 10 seconds once it is triggered', function () {
+it('triggers a confetti event when the `!celebrate` command is detected', function () {
     Event::fake();
 
-    $this->postJson(route('webhook.twitch'), $this->payload);
-    $this->postJson(route('webhook.twitch'), $this->payload);
+    $this->payload['event']['message']['text'] = '!celebrate';
 
-    Event::assertDispatched(ConfettiExplode::class, 1);
+    $this
+        ->withHeaders(headers($this->payload))
+        ->postJson(route('webhook.twitch'), $this->payload);
 
-    Carbon::setTestNow(now()->addSeconds(10));
-
-    $this->postJson(route('webhook.twitch'), $this->payload);
-
-    Event::assertDispatched(ConfettiExplode::class, 2);
-});
-
-it('sends a locked confetti event when the confetti command is ignored due to an existing lock', function () {
-    Event::fake();
-
-    $this->postJson(route('webhook.twitch'), $this->payload);
-    Event::assertDispatched(ConfettiExplode::class, 1);
-
-    // Simulate a second request while the lock is still active
-    $this->postJson(route('webhook.twitch'), $this->payload);
-
-    Event::assertDispatched(ConfettiLocked::class);
+    Event::assertDispatched(CelebrationOver::class);
 });
 
 /**

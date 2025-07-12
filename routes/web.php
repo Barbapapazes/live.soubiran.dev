@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\BreakOverlayController;
+use App\Http\Controllers\CelebrateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EndOverlayController;
 use App\Http\Controllers\HideLiveQuestionController;
@@ -33,6 +34,9 @@ Route::middleware(['auth', EnsureHasAccess::class])->group(function () {
         ->name('live-question.show');
     Route::delete('live-question', HideLiveQuestionController::class)
         ->name('live-question.hide');
+
+    Route::post('celebrate', CelebrateController::class)
+        ->name('celebrate');
 
 });
 
