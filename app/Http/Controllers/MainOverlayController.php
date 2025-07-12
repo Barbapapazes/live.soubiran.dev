@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Response;
 
-class MainOverlayController extends Controller
+class MainOverlayController
 {
     /**
      * Handle the incoming request.

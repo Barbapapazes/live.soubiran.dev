@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class TwitchCallbackController extends Controller
+class TwitchCallbackController
 {
     /**
      * Handle the incoming request.

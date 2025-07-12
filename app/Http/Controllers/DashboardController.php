@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
-class DashboardController extends Controller
+class DashboardController
 {
     /**
      * Handle the incoming request.

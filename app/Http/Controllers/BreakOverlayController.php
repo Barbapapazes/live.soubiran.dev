@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
-class BreakOverlayController extends Controller
+class BreakOverlayController
 {
     /**
      * Handle the incoming request.

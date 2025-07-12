@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Events\HideLiveQuestion;
 
-class HideLiveQuestionController extends Controller
+class HideLiveQuestionController
 {
     /**
      * Handle the incoming request.

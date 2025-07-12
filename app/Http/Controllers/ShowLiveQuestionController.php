@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Events\ShowLiveQuestion;
 use Illuminate\Http\Request;
 
-class ShowLiveQuestionController extends Controller
+class ShowLiveQuestionController
 {
     /**
      * Handle the incoming request.

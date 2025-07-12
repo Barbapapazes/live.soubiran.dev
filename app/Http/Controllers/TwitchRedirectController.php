@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\TwitchProvider;
 
-class TwitchRedirectController extends Controller
+class TwitchRedirectController
 {
     /**
      * Handle the incoming request.
