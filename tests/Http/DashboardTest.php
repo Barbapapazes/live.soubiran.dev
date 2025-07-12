@@ -6,7 +6,7 @@ use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function () {
-    $this->user = User::factory()->create();
+    $this->user = User::factory()->hasAccess()->create();
 });
 
 it('requires authentication', function () {

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
-    $this->user = User::factory()->create();
+    $this->user = User::factory()->hasAccess()->create();
 
     $this->payload = [
         'question' => 'What is the meaning of life?',

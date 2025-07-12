@@ -11,6 +11,7 @@ use App\Http\Controllers\ShowLiveQuestionController;
 use App\Http\Controllers\StartOverlayController;
 use App\Http\Controllers\TwitchCallbackController;
 use App\Http\Controllers\TwitchRedirectController;
+use App\Http\Middleware\EnsureHasAccess;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('overlays')->name('overlays.')->group(function () {
@@ -24,7 +25,7 @@ Route::prefix('overlays')->name('overlays.')->group(function () {
         ->name('break');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', EnsureHasAccess::class])->group(function () {
     Route::get('dashboard', DashboardController::class)
         ->name('dashboard');
 

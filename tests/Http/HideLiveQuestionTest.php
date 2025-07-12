@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
-    $this->user = User::factory()->create();
+    $this->user = User::factory()->hasAccess()->create();
 });
 
 it('requires authentication', function () {
