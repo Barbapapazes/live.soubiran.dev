@@ -1,21 +1,43 @@
-import Tailwind from '@tailwindcss/vite'
-import Vue from '@vitejs/plugin-vue'
-import Laravel from 'laravel-vite-plugin'
-import AutoImport from 'unplugin-auto-import/vite'
-import Fonts from 'unplugin-fonts/vite'
-import Components from 'unplugin-vue-components/vite'
+import ui from '@nuxt/ui/vite'
+import vue from '@vitejs/plugin-vue'
+import laravel from 'laravel-vite-plugin'
+import fonts from 'unplugin-fonts/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
-    Laravel({
+    laravel({
       input: ['resources/js/app.ts'],
       refresh: true,
     }),
 
-    Vue(),
-    Tailwind(),
-    Fonts({
+    vue(),
+    ui({
+      inertia: true,
+      components: {
+        dts: 'resources/js/components.d.ts',
+        dirs: [
+          'resources/js/components',
+          'resources/js/layouts',
+        ],
+      },
+      autoImport: {
+        dts: 'resources/js/auto-imports.d.ts',
+        dirs: [
+          'resources/js/composables',
+          'resources/js/utils',
+        ],
+        imports: [
+          'vue',
+          '@vueuse/core',
+          {
+            from: '@inertiajs/vue3',
+            imports: ['useForm'],
+          },
+        ],
+      },
+    }),
+    fonts({
       google: {
         families: [
           {
@@ -32,29 +54,6 @@ export default defineConfig({
           },
         ],
       },
-    }),
-
-    AutoImport({
-      dts: 'resources/js/auto-imports.d.ts',
-      dirs: [
-        'resources/js/composables',
-        'resources/js/utils',
-      ],
-      imports: [
-        'vue',
-        '@vueuse/core',
-        {
-          from: '@inertiajs/vue3',
-          imports: ['useForm'],
-        },
-      ],
-    }),
-    Components({
-      dts: 'resources/js/components.d.ts',
-      dirs: [
-        'resources/js/components',
-        'resources/js/layouts',
-      ],
     }),
   ],
 
