@@ -1,0 +1,45 @@
+diff --git a/dist/unplugin.mjs b/dist/unplugin.mjs
+index 0f3319ebae40c233956bb2483d7b7f488e89d3b6..1e78ea5addeb9e13acd9155cc80071d2dd094e6e 100644
+--- a/dist/unplugin.mjs
++++ b/dist/unplugin.mjs
+@@ -5,7 +5,7 @@ import { defu } from 'defu';
+ import { createUnplugin } from 'unplugin';
+ import ui from '@nuxt/ui/vite';
+ import { g as getTemplates, i as icons, t as theme, v as validateLicense } from './shared/ui-pro.CsgJ05mi.mjs';
+-import dotenv from 'dotenv';
++import dotenv from '@dotenvx/dotenvx';
+ import { consola } from 'consola';
+ import { colors } from 'consola/utils';
+ import 'scule';
+@@ -56,10 +56,9 @@ function AppConfigPlugin(appConfig) {
+   };
+ }
+ 
+-dotenv.config();
+ function LicensePlugin(license) {
+   const theme$1 = theme || { env: "NUXT_UI_PRO_LICENSE", link: "https://ui.nuxt.com/pro" };
+-  const key = process.env[theme$1.env] || license;
++  const key = dotenv.get(theme$1.env) || license;
+   return {
+     name: "nuxt:ui-pro:license",
+     vite: {
+diff --git a/package.json b/package.json
+index 994ab604114560eeb7806da905abf7a1e0e24283..e9df98203508a45c4505e135ebdbfa8838db4482 100644
+--- a/package.json
++++ b/package.json
+@@ -103,6 +103,7 @@
+   },
+   "dependencies": {
+     "@ai-sdk/vue": "^1.2.12",
++    "@dotenvx/dotenvx": "^1.47.5",
+     "@nuxt/kit": "^3.17.5",
+     "@nuxt/schema": "^3.17.5",
+     "@nuxt/ui": "^3.2.0",
+@@ -110,7 +111,6 @@
+     "@vueuse/core": "^13.4.0",
+     "consola": "^3.4.2",
+     "defu": "^6.1.4",
+-    "dotenv": "^16.5.0",
+     "git-url-parse": "^16.1.0",
+     "motion-v": "^1.3.0",
+     "ofetch": "^1.4.1",
