@@ -19,7 +19,7 @@ class EndOverlayController
             ->first();
 
         return inertia('overlays/end', [
-            'preset' => $preset,
+            'preset' => fn () => $preset,
         ]);
     }
 }
