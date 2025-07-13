@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Preset;
 use Inertia\Response;
 
 class StartOverlayController
@@ -13,6 +14,12 @@ class StartOverlayController
      */
     public function __invoke(): Response
     {
-        return inertia('overlays/start');
+        $preset = Preset::query()
+            ->activated()
+            ->first();
+
+        return inertia('overlays/start', [
+            'preset' => fn () => $preset,
+        ]);
     }
 }

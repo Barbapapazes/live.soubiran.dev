@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Tag } from './Tag.vue'
+import type { PresetTag } from '@/types/preset'
 
 const props = defineProps<{
-  tags: Tag[]
+  tags: PresetTag[]
 }>()
 </script>
 

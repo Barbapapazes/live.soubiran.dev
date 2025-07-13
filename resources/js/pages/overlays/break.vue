@@ -1,16 +1,35 @@
 <script lang="ts" setup>
-import { tags } from '../../utils/tags'
+import type { Preset } from '@/types/preset'
 
-const headline = 'Estéban Soubiran - Je reviens dans quelques minutes !'
-const title = 'Pause eau en cours...'
+const props = defineProps<{
+  preset: Preset
+}>()
+
+onMounted(() => {
+  window.Echo.channel('live')
+    .listen('PresetActivated', (event: { preset: Preset }) => {
+      router.replace({
+        props: currentProps => ({ ...currentProps, preset: event.preset }),
+      })
+    })
+    .listen('PresetUpdated', (event: { preset: Preset }) => {
+      router.replace({
+        props: currentProps => ({ ...currentProps, preset: event.preset }),
+      })
+    })
+})
+
+const colors = computed(() => {
+  return props.preset.data.tags.map(tag => tag.color)
+})
 </script>
 
 <template>
-  <App>
+  <App :colors="colors">
     <Default>
-      <Header :headline="headline" :title="title" />
+      <Header :headline="props.preset.data.break.headline" :title="props.preset.data.break.title" />
 
-      <Tags :tags="tags" />
+      <Tags :tags="props.preset.data.tags" />
     </Default>
   </App>
 </template>

@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ActivatePresetController;
 use App\Http\Controllers\BreakOverlayController;
 use App\Http\Controllers\CelebrateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EndOverlayController;
 use App\Http\Controllers\HideLiveQuestionController;
 use App\Http\Controllers\MainOverlayController;
+use App\Http\Controllers\PresetController;
 use App\Http\Controllers\ShowLiveQuestionController;
 use App\Http\Controllers\StartOverlayController;
 use App\Http\Controllers\TwitchCallbackController;
@@ -29,6 +31,11 @@ Route::prefix('overlays')->name('overlays.')->group(function () {
 Route::middleware(['auth', EnsureHasAccess::class])->group(function () {
     Route::get('dashboard', DashboardController::class)
         ->name('dashboard');
+    Route::resource('presets', PresetController::class)
+        ->only(['store', 'update', 'destroy'])
+        ->names('presets');
+    Route::post('presets/{preset}/activate', ActivatePresetController::class)
+        ->name('presets.activate');
 
     Route::post('live-question', ShowLiveQuestionController::class)
         ->name('live-question.show');

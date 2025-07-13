@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Models\Preset;
+use App\Models\Subscription;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 test('to array', function () {
     $user = User::factory()->create()->fresh();
@@ -19,7 +20,11 @@ test('to array', function () {
 });
 
 test('relations', function () {
-    $user = User::factory()->hasSubscriptions()->create();
+    $user = User::factory()
+        ->hasSubscriptions()
+        ->hasPresets()
+        ->create();
 
-    expect($user->subscriptions)->toBeInstanceOf(Collection::class);
+    expect($user->subscriptions)->each->toBeInstanceOf(Subscription::class)
+        ->and($user->presets)->each->toBeInstanceOf(Preset::class);
 });
