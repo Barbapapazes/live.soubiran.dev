@@ -11,7 +11,7 @@ class DeactivatePresets
     public function handle(): void
     {
         Preset::query()
-            ->whereNotNull('activated_at')
+            ->activated()
             ->update(['activated_at' => null]);
     }
 }
