@@ -25,7 +25,7 @@ const form = useForm({
 
 const tagsErrors = computed(() => {
   return Object.entries(form.errors).reduce((acc, [key, message]) => {
-    const match = /^start.tags\.(\d+)\.(\w+)$/.exec(key)
+    const match = /^tags\.(\d+)\.(\w+)$/.exec(key)
     if (match) {
       const index = Number(match[1])
       const field = match[2]
