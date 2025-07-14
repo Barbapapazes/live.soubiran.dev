@@ -13,6 +13,12 @@ export default defineConfig({
 
     vue(),
     uiPro({
+      ui: {
+        colors: {
+          primary: 'purple',
+          neutral: 'neutral',
+        },
+      },
       inertia: true,
       components: {
         dts: 'resources/js/components.d.ts',

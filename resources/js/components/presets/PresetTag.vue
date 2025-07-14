@@ -20,7 +20,7 @@ const value = defineModel<PresetTag>({ required: true })
     </UFormField>
 
     <UFormField label="Tag Color" name="tag-color" :error="props.errors?.color" required>
-      <UInput v-model="value.color" placeholder="Enter the tag color" class="w-full" />
+      <UInput v-model="value.color" type="color" placeholder="Enter the tag color" class="w-full" />
     </UFormField>
   </div>
 </template>

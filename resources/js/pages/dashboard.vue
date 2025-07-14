@@ -1,73 +1,29 @@
 <script lang="ts" setup>
 import type { Preset } from '@/types/preset'
 
-interface ReceivedMessage {
-  message: string
-  username: string
-  color: string
-}
-
 const props = defineProps<{
   presets: Preset[]
 }>()
-
-const messages = ref<ReceivedMessage[]>([])
-
-onMounted(() => {
-  window.Echo.private('chat')
-    .listen('ReceivedMessage', (event: ReceivedMessage) => {
-      messages.value.push(event)
-    })
-})
-const reverseMessages = computed(() => {
-  return messages.value.slice().reverse()
-})
-
-const showLiveQuestionForm = useForm({
-  question: '',
-  username: '',
-  color: '',
-})
-function showLiveQuestion(message: ReceivedMessage) {
-  showLiveQuestionForm.question = message.message
-  showLiveQuestionForm.username = message.username
-  showLiveQuestionForm.color = message.color
-
-  showLiveQuestionForm.post('/live-question')
-}
-
-const hideLiveQuestionForm = useForm({})
-function hideLiveQuestion() {
-  hideLiveQuestionForm.delete('/live-question')
-}
-
-function celebrate() {
-  useForm({}).post('/celebrate')
-}
 </script>
 
 <template>
   <UApp>
-    <main class="isolate">
-      <PresetsSection :presets="props.presets" />
+    <UMain class="isolate">
+      <UPage>
+        <UPageBody>
+          <UContainer>
+            <div class="grid grid-cols-4 gap-8">
+              <CelebrateQuickAction />
+            </div>
 
-      <UButton label="Celebrate" @click="celebrate" />
+            <div class="mt-8 grid grid-cols-5 gap-8 items-start">
+              <PresetsCard class="col-span-2" :presets="props.presets" />
 
-      <ul>
-        <li v-for="(msg, index) in reverseMessages" :key="index">
-          <button @click="showLiveQuestion(msg)">
-            {{ msg.message }}
-          </button>
-
-          <span :style="{ color: msg.color }">
-            <strong>{{ msg.username }}</strong>
-          </span>
-        </li>
-      </ul>
-
-      <button @click="hideLiveQuestion">
-        Hide Live Question
-      </button>
-    </main>
+              <ChatCard class="col-span-3" />
+            </div>
+          </UContainer>
+        </UPageBody>
+      </UPage>
+    </UMain>
   </UApp>
 </template>

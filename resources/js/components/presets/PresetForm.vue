@@ -4,6 +4,9 @@ import type { Preset } from '@/types/preset'
 const props = defineProps<{
   preset?: Preset
 }>()
+const emits = defineEmits<{
+  submit: [void]
+}>()
 
 const form = useForm({
   name: props.preset?.name || '',
@@ -40,18 +43,24 @@ function onSubmit() {
   if (props.preset) {
     form.put(`/presets/${props.preset.id}`, {
       only: ['presets'],
+      onSuccess: () => {
+        emits('submit')
+      },
     })
   }
   else {
     form.post('/presets', {
       only: ['presets'],
+      onSuccess: () => {
+        emits('submit')
+      },
     })
   }
 }
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form class="space-y-4" @submit.prevent="onSubmit">
     <UFormField label="Name" name="name" :error="form.errors.name" required>
       <UInput v-model="form.name" placeholder="Enter the preset name" class="w-full" />
     </UFormField>
@@ -92,12 +101,12 @@ function onSubmit() {
       <UInput v-model="form.end.description" placeholder="Enter the end description" class="w-full" />
     </UFormField>
 
-    <div class="flex flex-row items-center justify-end gap-4">
+    <div class="mt-8 flex flex-row items-center justify-end gap-4">
       <span v-if="form.recentlySuccessful" class="text-sm text-muted">
         Created.
       </span>
 
-      <UButton type="submit" :label="props.preset ? 'Update Preset' : 'Create Preset'" :loading="form.processing" />
+      <UButton block type="submit" :label="props.preset ? 'Update Preset' : 'Create Preset'" :loading="form.processing" />
     </div>
   </form>
 </template>

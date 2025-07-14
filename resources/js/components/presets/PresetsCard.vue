@@ -29,15 +29,11 @@ function onCreatePreset() {
 </script>
 
 <template>
-  <section class="space-y-4">
-    <div class="flex flex-row items-center justify-between">
-      <h2 class="font-semibold text-lg">
-        Presets
-      </h2>
-
-      <UButton label="Create Preset" color="neutral" variant="subtle" @click="onCreatePreset" />
-    </div>
+  <DashboardCard title="Presets" :ui="{ body: 'p-0 sm:p-0' }">
+    <template #actions>
+      <UButton label="New" color="neutral" variant="ghost" @click="onCreatePreset" />
+    </template>
 
     <PresetsTable :presets="props.presets" @select="onPresetSelect" />
-  </section>
+  </DashboardCard>
 </template>

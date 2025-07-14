@@ -13,9 +13,9 @@ export interface Preset {
       title: string
     }
     break: {
-        headline: string
-        title: string
-    },
+      headline: string
+      title: string
+    }
     end: {
       headline: string
       title: string

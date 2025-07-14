@@ -6,6 +6,9 @@ const props = defineProps<{
 }>()
 
 onMounted(() => {
+  // Override the default body element to ensure it is white.
+  document.querySelector('body')!.style.backgroundColor = '#ffffff'
+
   window.Echo.channel('live')
     .listen('PresetActivated', (event: { preset: Preset }) => {
       router.replace({
