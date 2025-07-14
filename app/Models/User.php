@@ -6,6 +6,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,5 +33,23 @@ class User extends Authenticatable
     public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class);
+    }
+
+    /**
+     * Get the presets for the user.
+     *
+     * @return HasMany<Preset, covariant $this>
+     */
+    public function presets(): HasMany
+    {
+        return $this->hasMany(Preset::class);
+    }
+
+    /**
+     * Check if the user owns a model.
+     */
+    public function owns(Model $model, string $relation = 'user'): bool
+    {
+        return $model->{$relation}()->is($this);
     }
 }

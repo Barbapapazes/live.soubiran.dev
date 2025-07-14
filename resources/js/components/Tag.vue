@@ -1,13 +1,8 @@
-<script lang="ts">
-export interface Tag {
-  name: string
-  color: string
-}
-</script>
-
 <script lang="ts" setup>
+import type { PresetTag } from '@/types/preset'
+
 const props = defineProps<{
-  tag: Tag
+  tag: PresetTag
 }>()
 </script>
 

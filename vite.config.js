@@ -32,7 +32,7 @@ export default defineConfig({
           '@vueuse/core',
           {
             from: '@inertiajs/vue3',
-            imports: ['useForm'],
+            imports: ['useForm', 'router'],
           },
         ],
       },
