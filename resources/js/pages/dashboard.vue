@@ -1,9 +1,15 @@
 <script lang="ts" setup>
+import type { Preset } from '@/types/preset'
+
 interface ReceivedMessage {
   message: string
   username: string
   color: string
 }
+
+const props = defineProps<{
+  presets: Preset[]
+}>()
 
 const messages = ref<ReceivedMessage[]>([])
 
@@ -34,24 +40,34 @@ const hideLiveQuestionForm = useForm({})
 function hideLiveQuestion() {
   hideLiveQuestionForm.delete('/live-question')
 }
+
+function celebrate() {
+  useForm({}).post('/celebrate')
+}
 </script>
 
 <template>
-  <main>
-    <ul>
-      <li v-for="(msg, index) in reverseMessages" :key="index">
-        <button @click="showLiveQuestion(msg)">
-          {{ msg.message }}
-        </button>
+  <UApp>
+    <main class="isolate">
+      <PresetsSection :presets="props.presets" />
 
-        <span :style="{ color: msg.color }">
-          <strong>{{ msg.username }}</strong>
-        </span>
-      </li>
-    </ul>
+      <UButton label="Celebrate" @click="celebrate" />
 
-    <button @click="hideLiveQuestion">
-      Hide Live Question
-    </button>
-  </main>
+      <ul>
+        <li v-for="(msg, index) in reverseMessages" :key="index">
+          <button @click="showLiveQuestion(msg)">
+            {{ msg.message }}
+          </button>
+
+          <span :style="{ color: msg.color }">
+            <strong>{{ msg.username }}</strong>
+          </span>
+        </li>
+      </ul>
+
+      <button @click="hideLiveQuestion">
+        Hide Live Question
+      </button>
+    </main>
+  </UApp>
 </template>

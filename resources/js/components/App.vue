@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-
+const props = defineProps<{
+  colors: string[]
+}>()
 </script>
 
 <template>
@@ -7,6 +9,6 @@
     <slot />
 
     <LiveQuestionOverlay />
-    <ConfettiOverlay />
+    <ConfettiOverlay :colors="props.colors" />
   </div>
 </template>
