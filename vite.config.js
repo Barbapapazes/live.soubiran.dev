@@ -1,4 +1,4 @@
-import ui from '@nuxt/ui/vite'
+import uiPro from '@nuxt/ui-pro/vite'
 import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
 import fonts from 'unplugin-fonts/vite'
@@ -12,7 +12,13 @@ export default defineConfig({
     }),
 
     vue(),
-    ui({
+    uiPro({
+      ui: {
+        colors: {
+          primary: 'purple',
+          neutral: 'neutral',
+        },
+      },
       inertia: true,
       components: {
         dts: 'resources/js/components.d.ts',

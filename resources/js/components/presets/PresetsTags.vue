@@ -27,13 +27,13 @@ function items(index: number): ContextMenuItem[] {
 </script>
 
 <template>
-  <div>
+  <div class="space-y-4">
     <div v-for="(_, index) in value" :key="index">
       <UContextMenu :items="items(index) ">
-        <PresetTag v-model="value[index]" :errors="props.errors?.[index]" />
+        <PresetTag v-model="value[index]" :errors="props.errors?.[index]" class="grid grid-cols-2 gap-4" />
       </UContextMenu>
     </div>
 
-    <UButton label="Add Tag" @click="addTag" />
+    <UButton block label="Add Tag" variant="soft" @click="addTag" />
   </div>
 </template>

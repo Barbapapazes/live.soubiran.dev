@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Preset;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
@@ -14,6 +15,12 @@ class BreakOverlayController
      */
     public function __invoke(): Response
     {
-        return inertia('overlays/break');
+        $preset = Preset::query()
+            ->activated()
+            ->first();
+
+        return inertia('overlays/break', [
+            'preset' => $preset,
+        ]);
     }
 }

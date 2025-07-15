@@ -4,10 +4,17 @@ import type { Preset } from '@/types/preset'
 const props = defineProps<{
   preset?: Preset
 }>()
+const emits = defineEmits<{
+  close: [void]
+}>()
 
 const title = computed(() => {
-  return props.preset ? `Edit Preset: ${props.preset.name}` : 'Create New Preset'
+  return props.preset ? `Edit Preset` : 'New Preset'
 })
+
+function onSubmit() {
+  emits('close')
+}
 </script>
 
 <template>
@@ -15,7 +22,7 @@ const title = computed(() => {
     :title="title"
   >
     <template #body>
-      <PresetForm :preset="props.preset" />
+      <PresetForm :preset="props.preset" @submit="onSubmit" />
     </template>
   </USlideover>
 </template>

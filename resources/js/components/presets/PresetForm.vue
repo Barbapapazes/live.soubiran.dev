@@ -4,9 +4,13 @@ import type { Preset } from '@/types/preset'
 const props = defineProps<{
   preset?: Preset
 }>()
+const emits = defineEmits<{
+  submit: [void]
+}>()
 
 const form = useForm({
   name: props.preset?.name || '',
+  color: props.preset?.data.color || '',
   tags: (props.preset?.data.tags || []) as { name: string, color: string }[],
   start: {
     headline: props.preset?.data.start.headline || '',
@@ -40,20 +44,30 @@ function onSubmit() {
   if (props.preset) {
     form.put(`/presets/${props.preset.id}`, {
       only: ['presets'],
+      onSuccess: () => {
+        emits('submit')
+      },
     })
   }
   else {
     form.post('/presets', {
       only: ['presets'],
+      onSuccess: () => {
+        emits('submit')
+      },
     })
   }
 }
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form class="space-y-4" @submit.prevent="onSubmit">
     <UFormField label="Name" name="name" :error="form.errors.name" required>
       <UInput v-model="form.name" placeholder="Enter the preset name" class="w-full" />
+    </UFormField>
+
+    <UFormField label="Color" name="color" :error="form.errors.color" required>
+      <UInput v-model="form.color" placeholder="Enter the preset color" class="w-full" />
     </UFormField>
 
     <PresetsTags v-model="form.tags" :errors="tagsErrors" />
@@ -92,12 +106,12 @@ function onSubmit() {
       <UInput v-model="form.end.description" placeholder="Enter the end description" class="w-full" />
     </UFormField>
 
-    <div class="flex flex-row items-center justify-end gap-4">
+    <div class="mt-8 flex flex-row items-center justify-end gap-4">
       <span v-if="form.recentlySuccessful" class="text-sm text-muted">
         Created.
       </span>
 
-      <UButton type="submit" :label="props.preset ? 'Update Preset' : 'Create Preset'" :loading="form.processing" />
+      <UButton block type="submit" :label="props.preset ? 'Update Preset' : 'Create Preset'" :loading="form.processing" />
     </div>
   </form>
 </template>

@@ -47,6 +47,7 @@ Route::middleware(['auth', EnsureHasAccess::class])->group(function () {
 
 });
 
+Route::redirect('/', 'dashboard');
 Route::redirect('login', 'auth/twitch/redirect')
     ->name('login');
 Route::get('auth/twitch/redirect', TwitchRedirectController::class)->name('auth.twitch.redirect');
