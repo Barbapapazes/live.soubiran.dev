@@ -25,6 +25,7 @@ it('requires access', function () {
 it('creates a preset', function () {
     $payload = [
         'name' => 'Test Preset',
+        'color' => '#ff5733',
         'tags' => [
             ['name' => 'Tag1', 'color' => '#ff0000'],
             ['name' => 'Tag2', 'color' => '#00ff00'],
@@ -52,6 +53,7 @@ it('creates a preset', function () {
     $this->assertDatabaseHas(Preset::class, [
         'name' => 'Test Preset',
         'data' => json_encode([
+            'color' => '#ff5733',
             'tags' => [
                 ['name' => 'Tag1', 'color' => '#ff0000'],
                 ['name' => 'Tag2', 'color' => '#00ff00'],
@@ -85,6 +87,10 @@ it('validates data', function (array $payload, array $error) {
         [['name' => ''], ['name' => 'The name is required.']],
         [['name' => false], ['name' => 'The name must be a string.']],
         [['name' => str_repeat('a', 101)], ['name' => 'The name must not be greater than 100 characters.']],
+        // color validation
+        [['color' => ''], ['color' => 'The color is required.']],
+        [['color' => false], ['color' => 'The color must be a valid hexadecimal color.']],
+        [['color' => 'not-a-hex'], ['color' => 'The color must be a valid hexadecimal color.']],
         // tags validation
         [['tags' => 'not-an-array'], ['tags' => 'The tags must be an array.']],
         [['tags' => []], ['tags' => 'The tags are required.']],

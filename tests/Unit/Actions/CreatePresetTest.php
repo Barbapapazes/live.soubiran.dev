@@ -9,6 +9,7 @@ use App\Models\User;
 it('creates a preset', function () {
     $user = User::factory()->create();
     $name = 'Sample Preset';
+    $color = '#ff5733';
     $tags = [
         ['name' => 'Tag1', 'color' => '#ff0000'],
         ['name' => 'Tag2', 'color' => '#00ff00'],
@@ -29,6 +30,7 @@ it('creates a preset', function () {
 
     app()->make(CreatePreset::class)->handle($user, [
         'name' => $name,
+        'color' => $color,
         'tags' => $tags,
         'start' => $start,
         'break' => $break,
@@ -38,6 +40,7 @@ it('creates a preset', function () {
     $this->assertDatabaseHas(Preset::class, [
         'name' => $name,
         'data' => json_encode([
+            'color' => $color,
             'tags' => $tags,
             'start' => $start,
             'break' => $break,

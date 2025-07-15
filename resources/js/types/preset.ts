@@ -7,6 +7,7 @@ export interface Preset {
   id: number
   name: string
   data: {
+    color: string
     tags: PresetTag[]
     start: {
       headline: string

@@ -13,6 +13,7 @@ beforeEach(function () {
     $this->preset = Preset::factory()->create();
 
     $this->name = 'Sample Preset';
+    $this->color = '#ff5733';
     $this->tags = [
         ['name' => 'Tag1', 'color' => '#ff0000'],
         ['name' => 'Tag2', 'color' => '#00ff00'],
@@ -35,6 +36,7 @@ beforeEach(function () {
 it('updates a preset', function () {
     app()->make(UpdatePreset::class)->handle($this->preset, [
         'name' => $this->name,
+        'color' => $this->color,
         'tags' => $this->tags,
         'start' => $this->start,
         'break' => $this->break,
@@ -44,6 +46,7 @@ it('updates a preset', function () {
     $this->assertDatabaseHas(Preset::class, [
         'name' => $this->name,
         'data' => json_encode([
+            'color' => $this->color,
             'tags' => $this->tags,
             'start' => $this->start,
             'break' => $this->break,
@@ -58,6 +61,7 @@ it('broadcasts preset updated event', function () {
 
     app()->make(UpdatePreset::class)->handle($this->preset, [
         'name' => $this->name,
+        'color' => $this->color,
         'tags' => $this->tags,
         'start' => $this->start,
         'break' => $this->break,
@@ -72,6 +76,7 @@ it('broadcasts preset updated event', function () {
 it('does not broadcast preset updated event if preset is not activated', function () {
     app()->make(UpdatePreset::class)->handle($this->preset, [
         'name' => $this->name,
+        'color' => $this->color,
         'tags' => $this->tags,
         'start' => $this->start,
         'break' => $this->break,

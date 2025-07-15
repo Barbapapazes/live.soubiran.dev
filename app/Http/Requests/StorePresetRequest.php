@@ -25,6 +25,7 @@ class StorePresetRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100'],
+            'color' => ['required', 'hex_color'],
             'tags' => ['required', 'array'],
             'tags.*.name' => ['required', 'string', 'max:12'],
             'tags.*.color' => ['required', 'hex_color'],
@@ -50,6 +51,9 @@ class StorePresetRequest extends FormRequest
             'name.required' => 'The name is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name must not be greater than 100 characters.',
+            // color
+            'color.required' => 'The color is required.',
+            'color.hex_color' => 'The color must be a valid hexadecimal color.',
             // tags
             'tags.required' => 'The tags are required.',
             'tags.array' => 'The tags must be an array.',

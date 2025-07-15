@@ -10,6 +10,7 @@ const emits = defineEmits<{
 
 const form = useForm({
   name: props.preset?.name || '',
+  color: props.preset?.data.color || '',
   tags: (props.preset?.data.tags || []) as { name: string, color: string }[],
   start: {
     headline: props.preset?.data.start.headline || '',
@@ -63,6 +64,10 @@ function onSubmit() {
   <form class="space-y-4" @submit.prevent="onSubmit">
     <UFormField label="Name" name="name" :error="form.errors.name" required>
       <UInput v-model="form.name" placeholder="Enter the preset name" class="w-full" />
+    </UFormField>
+
+    <UFormField label="Color" name="color" :error="form.errors.color" required>
+      <UInput v-model="form.color" placeholder="Enter the preset color" class="w-full" />
     </UFormField>
 
     <PresetsTags v-model="form.tags" :errors="tagsErrors" />
