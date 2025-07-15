@@ -5,7 +5,11 @@ interface ShowLiveQuestion {
   color: string
 }
 
-const liveQuestion = ref<ShowLiveQuestion | null>(null)
+const liveQuestion = ref<ShowLiveQuestion | null>({
+  question: 'coucou',
+  username: 'esoub',
+  color: '#ff0000',
+})
 onMounted(() => {
   window.Echo.channel('live')
     .listen('ShowLiveQuestion', (event: ShowLiveQuestion) => {
