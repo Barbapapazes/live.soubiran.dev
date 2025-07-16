@@ -13,4 +13,4 @@ Route::post('webhook/twitch', TwitchWebhookController::class)
 Route::get('celebrate', CelebrateController::class)
     ->name('api.celebrate');
 Route::get('live-question/hide', HideLiveQuestionController::class)
-    ->name('live-question.hide');
+    ->name('api.live-question.hide');
